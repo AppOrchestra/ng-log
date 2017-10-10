@@ -1,0 +1,32 @@
+{
+  "name": "ng-log",
+  "version": "1.0.0",
+  "description": "",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "scripts": {
+    "build": "tsc",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "angular",
+    "angular 2",
+    "angular 4",
+    "log",
+    "logger",
+    "logging",
+    "tracing",
+    "error",
+    "console",
+    "debug"
+  ],
+  "author": "AppOrchestra",
+  "license": "ISC",
+  "devDependencies": {
+    "typescript": "^2.5.3"
+  },
+  "dependencies": {
+    "@angular/core": "^4.4.4",
+    "rxjs": "^5.4.3"
+  }
+}
