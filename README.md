@@ -44,4 +44,7 @@ class MyApp {
 }
 ```
 
-The most important use case for using this Log class is being able to subscribe to the
+The most important use case for using this Log class is being able to subscribe to the static *$logEntry* observable
+so you can perform some more interesting actions with the log messages.
+
+For example you may keep a history of the last 30 log messages, and on an error log message, post that with the history to your server.
