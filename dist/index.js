@@ -25,9 +25,10 @@ var LogLevel;
  * static observable so additional log functionality can be plugged in, e.g. submitting error messages to a server
  */
 var Log = /** @class */ (function () {
-    function Log() {
+    function Log(context) {
         /** The string to prepend to each log entry message */
-        this.context = '';
+        this.context = null;
+        this.context = context + ': ';
     }
     Log_1 = Log;
     /**
@@ -36,7 +37,7 @@ var Log = /** @class */ (function () {
      * @returns {Log}
      */
     Log.prototype.withContext = function (context) {
-        var log = new Log_1();
+        var log = new Log_1(null);
         log.context = context + ': ';
         return log;
     };
@@ -141,6 +142,24 @@ var Log = /** @class */ (function () {
             optionalParams[_i - 1] = arguments[_i];
         }
         var log = (this ? this.context : '') + message;
+        if (optionalParams) {
+            optionalParams.forEach(function (param) {
+                try {
+                    log += ' ' + JSON.stringify(param);
+                }
+                catch (e) {
+                    log += ' [Object]';
+                }
+            });
+        }
+        return log;
+    };
+    Log.staticToString = function (message) {
+        var optionalParams = [];
+        for (var _i = 1; _i < arguments.length; _i++) {
+            optionalParams[_i - 1] = arguments[_i];
+        }
+        var log = '(static)' + message;
         if (optionalParams) {
             optionalParams.forEach(function (param) {
                 try {

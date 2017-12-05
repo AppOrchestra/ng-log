@@ -30,6 +30,7 @@ export declare class Log {
     static $logEntry: Observable<LogEntry>;
     /** The string to prepend to each log entry message */
     private context;
+    constructor(context: string | null);
     /**
      * Factory method to create a new Log with the context set
      * @param context
@@ -78,4 +79,5 @@ export declare class Log {
      * @param optionalParams
      */
     private toString(message?, ...optionalParams);
+    private static staticToString(message?, ...optionalParams);
 }

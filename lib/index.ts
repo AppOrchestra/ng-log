@@ -38,7 +38,11 @@ export class Log {
     static $logEntry: Observable<LogEntry> = Log._logEntry.asObservable()
 
     /** The string to prepend to each log entry message */
-    private context: string = ''
+    private context: string | null = null
+
+    constructor(context: string | null) {
+        this.context = context + ': '
+    }
 
     /**
      * Factory method to create a new Log with the context set
@@ -46,7 +50,7 @@ export class Log {
      * @returns {Log}
      */
     withContext(context: string): Log {
-        let log = new Log()
+        let log = new Log(null)
         log.context = context + ': '
         return log
     }
@@ -69,7 +73,7 @@ export class Log {
      * @param optionalParams
      */
     error(message?: any, ...optionalParams: any[]): void {
-        const error = this.toString(message, ...optionalParams)
+        const error = this ? this.toString(message, ...optionalParams) : Log.staticToString(message, ...optionalParams)
         if (Log.logToConsole)
             console.error(error)
         Log._logEntry.next({message: error, level: LogLevel.ERROR, time: Date.now()})
@@ -130,6 +134,20 @@ export class Log {
      */
     private toString(message?: any, ...optionalParams: any[]): string {
         let log = (this ? this.context : '') + message
+        if (optionalParams) {
+            optionalParams.forEach(param => {
+                try {
+                    log += ' ' + JSON.stringify(param)
+                } catch(e) {
+                    log += ' [Object]'
+                }
+            })
+        }
+        return log
+    }
+
+    private static staticToString(message?: any, ...optionalParams: any[]): string {
+        let log = '(static)' + message
         if (optionalParams) {
             optionalParams.forEach(param => {
                 try {

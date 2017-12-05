@@ -13,10 +13,26 @@ yarn add ng-log
 
 ### Basic Usage
 
-The basic usage will log to the console.
+The basic usage will be to construct a Log instance, passing an argument which is a context value that
+will be prepended to each log message.
 
 ```typescript
 export class SomeComponent {
+
+    private log: Log = new Log(SomeComponent.name)
+
+    constructor() {}
+
+    public doTheThing() {
+       this.log.log('Doing the thing')
+    }
+}
+```
+
+The Log class has the @Injectable annotation, so you can also add it in your constructor if you added it in your app module providers.
+```typescript
+export class SomeComponent {
+
     constructor(private log: Log) {
         this.log = log.withContext(SomeComponent.name)
     }
@@ -25,6 +41,12 @@ export class SomeComponent {
        this.log.log('Doing the thing')
     }
 }
+```
+
+Note that if you use *SomeComponent.name* as the context then that will probably get mangled to the minified class name.
+If you have console logging enabled in production and want the proper name with a prod optimised build then you will need
+to use a string instead of a *.name* reference.
+
 
 ### Advanced usages
 
@@ -35,7 +57,7 @@ class MyApp {
 
     initializeApp() {
         this.platform.ready().then(() => {
-            if(this.env.isProduction()) {
+            if(environment.isProduction()) {
                 Log.logToConsole = false
             }
         })
@@ -44,7 +66,10 @@ class MyApp {
 }
 ```
 
-The most important use case for using this Log class is being able to subscribe to the static *$logEntry* observable
-so you can perform some more interesting actions with the log messages.
+All log messages logged will added to the static Observable property **$logEntry**
 
-For example you may keep a history of the last 30 log messages, and on an error log message, post that with the history to your server.
+An important use case for using this Log class is being able to subscribe to the **$logEntry** observable so you can
+perform more interesting actions, such as posting error messages to your server for error reporting.
+
+An example LogSubmitter is included in the /example folder which submits error messages, along with the recent
+log message history, and other information such as the userId, code version and platform version.
