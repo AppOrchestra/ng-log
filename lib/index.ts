@@ -40,8 +40,8 @@ export class Log {
     /** The string to prepend to each log entry message */
     private context: string | null = null
 
-    constructor(context: string | null) {
-        this.context = context + ': '
+    constructor(context?: string | null) {
+        this.context = context ? context + ': ' : null
     }
 
     /**
