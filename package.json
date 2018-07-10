@@ -1,6 +1,6 @@
 {
   "name": "ng-log",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "description": "",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
@@ -19,6 +19,8 @@
     "log",
     "logger",
     "logging",
+    "ngx",
+    "ionic",
     "tracing",
     "error",
     "console",
@@ -35,7 +37,8 @@
     "typescript": "^2.3.0"
   },
   "dependencies": {
-    "@angular/core": ">=2.0.0",
-    "rxjs": ">=5.0.0"
+    "@angular/core": "^6.0.6",
+    "rxjs": "^6.0.0",
+    "zone.js": "^0.8.26"
   }
 }
