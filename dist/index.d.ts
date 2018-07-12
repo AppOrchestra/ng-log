@@ -1,4 +1,4 @@
-import { Observable } from "rxjs/Observable";
+import { Observable } from "rxjs/index";
 /**
  * Log levels which match the console log methods
  */
@@ -8,7 +8,7 @@ export declare enum LogLevel {
     INFO = 2,
     LOG = 3,
     WARN = 4,
-    ERROR = 5,
+    ERROR = 5
 }
 /**
  * A LogEntry contains the message, logging level and timestamp
@@ -30,7 +30,7 @@ export declare class Log {
     static $logEntry: Observable<LogEntry>;
     /** The string to prepend to each log entry message */
     private context;
-    constructor(context: string | null);
+    constructor(context?: string | null);
     /**
      * Factory method to create a new Log with the context set
      * @param context
@@ -78,6 +78,6 @@ export declare class Log {
      * @param message
      * @param optionalParams
      */
-    private toString(message?, ...optionalParams);
-    private static staticToString(message?, ...optionalParams);
+    private toString;
+    private static staticToString;
 }

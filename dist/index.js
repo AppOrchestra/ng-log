@@ -7,7 +7,7 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 var core_1 = require("@angular/core");
-var Subject_1 = require("rxjs/Subject");
+var index_1 = require("rxjs/index");
 /**
  * Log levels which match the console log methods
  */
@@ -28,7 +28,7 @@ var Log = /** @class */ (function () {
     function Log(context) {
         /** The string to prepend to each log entry message */
         this.context = null;
-        this.context = context + ': ';
+        this.context = context ? context + ': ' : null;
     }
     Log_1 = Log;
     /**
@@ -66,7 +66,7 @@ var Log = /** @class */ (function () {
         for (var _i = 1; _i < arguments.length; _i++) {
             optionalParams[_i - 1] = arguments[_i];
         }
-        var error = this.toString.apply(this, [message].concat(optionalParams));
+        var error = this ? this.toString.apply(this, [message].concat(optionalParams)) : Log_1.staticToString.apply(Log_1, [message].concat(optionalParams));
         if (Log_1.logToConsole)
             console.error(error);
         Log_1._logEntry.next({ message: error, level: LogLevel.ERROR, time: Date.now() });
@@ -172,15 +172,15 @@ var Log = /** @class */ (function () {
         }
         return log;
     };
+    var Log_1;
     /** If the logger should log to the console. */
     Log.logToConsole = true;
     /** Observable for when a new log entry is logged */
-    Log._logEntry = new Subject_1.Subject();
+    Log._logEntry = new index_1.Subject();
     Log.$logEntry = Log_1._logEntry.asObservable();
     Log = Log_1 = __decorate([
         core_1.Injectable()
     ], Log);
     return Log;
-    var Log_1;
 }());
 exports.Log = Log;
